@@ -8,7 +8,7 @@ void setup()
 {
 
 Serial.begin(9600);
-rfid.begin(7, 5, 4, 3, 6, 2);//rfid.begin(IRQ_PIN,SCK_PIN,MOSI_PIN,MISO_PIN,NSS_PIN,RST_PIN)
+rfid.begin(9, 5, 4, 3, 6, 18);//rfid.begin(IRQ_PIN,SCK_PIN,MOSI_PIN,MISO_PIN,NSS_PIN,RST_PIN)
 delay(100); 
 rfid.init(); //initialize the RFID
 
