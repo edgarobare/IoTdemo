@@ -4,7 +4,6 @@
 #include <Servo.h> 
 
 
-
 // buzzer
 
 #define  c3    7634
@@ -38,7 +37,7 @@
  
 // SETUP //
  
-int speakerOut = 9;    // Set up speaker on digital pin 7
+int speakerOut = 9;    // Set up speaker on digital pin 
 
 
 // End buzzer 
@@ -50,19 +49,17 @@ RF24 radio(7, 8);
 const uint64_t pipe = 0xE6E6E6E6E6E6; // Needs to be the same for communicating between 2 NRF24L01 
 int ReceivedMessage[1] = {000}; // Used to store value received by the NRF24L01
 
-//Servo myservo;  // create servo object to control a servo 
+Servo myservo;  // create servo object to control a servo 
                 // a maximum of eight servo objects can be created 
  
-//int pos = 0;
+int pos = 0;
  
 Servo servoright; 
-int pos = 0; 
-
 
 
 void setup()
 {
-  servoright.attach (9); 
+  servoright.attach (10); 
   while (!Serial);
   Serial.begin(9600);
   
@@ -71,11 +68,7 @@ void setup()
   radio.startListening(); // Listen to see if information received
 
   pinMode(speakerOut, OUTPUT);
-  
- // pinMode(ledPin,OUTPUT);
-  //sweeper1.Attach(9);
-  //Servo1.attach(servoPin); 
- // myservo.attach(9);  // attaches the servo on pin 9 to the servo object  
+   
 }
 
 // Buzzer
@@ -85,14 +78,19 @@ void setup()
 //  which sets each note's relative length (higher #, longer note) 
  
 // Melody 1: Star Wars Imperial March
-int melody1[] = {  a4, R,  a4, R,  a4, R,  f4, R, c5, R,  a4, R,  f4, R, c5, R, a4, R,  e5, R,  e5, R,  e5, R,  f5, R, c5, R,  g5, R,  f5, R,  c5, R, a4, R};
-int beats1[]  = {  50, 20, 50, 20, 50, 20, 40, 5, 20, 5,  60, 10, 40, 5, 20, 5, 60, 80, 50, 20, 50, 20, 50, 20, 40, 5, 20, 5,  60, 10, 40, 5,  20, 5, 60, 40};
+//int melody1[] = {  a4, R,  a4, R,  a4, R,  f4, R, c5, R,  a4, R,  f4, R, c5, R, a4, R,  e5, R,  e5, R,  e5, R,  f5, R, c5, R,  g5, R,  f5, R,  c5, R, a4, R};
+//int beats1[]  = {  50, 20, 50, 20, 50, 20, 40, 5, 20, 5,  60, 10, 40, 5, 20, 5, 60, 80, 50, 20, 50, 20, 50, 20, 40, 5, 20, 5,  60, 10, 40, 5,  20, 5, 60, 40};
+
+int melody1[] = {  a4, R,  a4, R,  a4, R};
+int beats1[]  = {  50, 20, 50, 20, 50, 20};
  
 // Melody 2: Star Wars Theme
 int melody2[] = {  f4,  f4, f4,  a4s,   f5,  d5s,  d5,  c5, a5s, f5, d5s,  d5,  c5, a5s, f5, d5s, d5, d5s,   c5};
 int beats2[]  = {  21,  21, 21,  128,  128,   21,  21,  21, 128, 64,  21,  21,  21, 128, 64,  21, 21,  21, 128 }; 
  
-int MAX_COUNT1 = sizeof(melody1) / 2; // Melody length, for looping.
+//int MAX_COUNT1 = sizeof(melody1) / 2; // Melody length, for looping.
+
+int MAX_COUNT1 =1; // Melody length, for looping.
 int MAX_COUNT2 = sizeof(melody2) / 2; // Melody length, for looping.
  
 long tempo = 10000; // Set overall tempo
@@ -148,30 +146,15 @@ while (radio.available())
     
      if (ReceivedMessage[0] == 111){
       Serial.println("RIGHT SWIPE");
-      //digitalWrite(ledPin,HIGH);
 
       forward ();
-      
-
-//    for(pos = 0; pos < 90; pos += 1)  // goes from 0 degrees to 180 degrees 
-//      {                                  // in steps of 1 degree 
-//        myservo.write(pos);              // tell servo to go to position in variable 'pos' 
-//       delay(15);                       // waits 15ms for the servo to reach the position 
-//  } 
   
       }
       
      if (ReceivedMessage[0] == 000) {
       Serial.println("LEFT SWIPE");
-     // digitalWrite(ledPin,LOW);
-
+         
       reverse (); 
-
-//    for(pos = 90; pos>=1; pos-=1)     // goes from 180 degrees to 0 degrees 
-//      {                                
-//        myservo.write(pos);              // tell servo to go to position in variable 'pos' 
-//        delay(15);                       // waits 15ms for the servo to reach the position 
-//  } 
       
       }
 
@@ -183,14 +166,15 @@ while (radio.available())
         int ring = 0;
         ring++;
         if (ring = 4) {
-          siren();}
+          
+         siren();
+                      }
         
         
       }
       }
-     //delay(10);
 
-     
+    
      }
 
   
@@ -198,23 +182,17 @@ while (radio.available())
 
 void forward () 
 { 
- Serial.println("FORWARD");
+
 servoright.write (180);
 delay (1000);
-stopRobot (); 
+ 
 } 
 void reverse () 
 { 
-Serial.println("REVERSE");
+
 servoright.write (0);
 delay (1000);
-stopRobot () ; 
-}
-void stopRobot () 
-{ 
-Serial.println("STOP");
-servoright.write (90); 
-//delay (3000); 
+
 }
 
 void siren()//This function will make the alarm sound using the piezo buzzer
@@ -231,6 +209,8 @@ void siren()//This function will make the alarm sound using the piezo buzzer
     delayMicroseconds(pause);
     }
  
-analogWrite(speakerOut,255);
+    
+    analogWrite(speakerOut,255);
+    
 }
 

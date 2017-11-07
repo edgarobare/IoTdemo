@@ -1,6 +1,7 @@
 #include <ESP8266WiFi.h>  // the ESP8266WiFi.h  lib
-const char* SSID = "Vodafone-33359967";
-const char* PASS = "hpbl6t7v4ii8yxy";
+
+const char* SSID = "AMdesignoffice";
+const char* PASS = "viamontetondo1";
 char server[] = "mail.smtpcorp.com";
 ADC_MODE(ADC_VCC);
 
@@ -16,10 +17,8 @@ int sensorValue = 0;  // variable to store the value coming from the sensor
  {
     // declare the ledPin as an OUTPUT:
    pinMode(ledPin, OUTPUT);
-   
-   //Serial.begin(115200);
-   //attachInterrupt(1, intruder_detect, RISING);//Initialize the interrupt pin for the motion sensor (Arduino digital pin 2)
-  // intruder = 0;
+  
+
 
   //email
   Serial.begin(115200);
@@ -46,6 +45,7 @@ void loop()
  {
   
    lightsense();
+
 
  }
 
@@ -102,18 +102,22 @@ byte sendEmail()
   client.println("bkdtLTZ6OS1XN3MtV1lT");//  SMTP Passw
      if (!eRcv()) return 0;
     Serial.println(F("Sending From"));   // change to your email address (sender)
-   client.println(F("MAIL From: edgarrobare@gmail.com"));// not important 
+   client.println(F("MAIL From: hello@amdesignoffice.com"));// not important 
    if (!eRcv()) return 0;   // change to recipient address
     Serial.println(F("Sending To"));
-    client.println(F("RCPT To: edgarobare@icloud.com"));
+    client.println(F("RCPT To: simonesimonelli@gmail.com"));
     if (!eRcv()) return 0;
     Serial.println(F("Sending DATA"));
     client.println(F("DATA"));
     if (!eRcv()) return 0;
     Serial.println(F("Sending email"));   // change to recipient address
-   client.println(F("To: edgarobare@icloud.com"));   // change to your address
-   client.println(F("From: edgarrobare@gmail.com"));
- client.println(F("Subject: Emails from ESp8266\r\n"));
+   client.println(F("To: simonesimonelli@gmail.com"));   // change to your address
+   client.println(F("From: hello@amdesignoffice.com"));
+ client.println(F("Subject: Hello\r\n"));
+    client.print(F("The notification was sent successfully!"));
+    client.print(F(" "));
+    client.print(F("Hello, from AM Design Office"));
+
     client.print(F("Power is: "));
     client.print(ESP.getVcc());
     client.println(F("mV"));
@@ -122,6 +126,7 @@ byte sendEmail()
     Serial.print(F("Voltage is: "));
     Serial.print(ESP.getVcc());
     client.println(F("."));
+    
     if (!eRcv()) return 0;
     Serial.println(F("Sending QUIT"));
     client.println(F("QUIT"));

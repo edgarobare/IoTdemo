@@ -3,6 +3,7 @@
 #include <RF24.h>
 #include <Wire.h> // Must include Wire library for I2C
 #include <ZX_Sensor.h>
+#include"rfid1.h"
 
 //    Gesture Sensor 
 
@@ -20,7 +21,8 @@ uint8_t gesture_speed;
 
 // Nrf24
 
-RF24 radio(7, 8); // NRF24L01 used SPI pins + Pin 7 and 8 on the Mega
+//RF24 radio(7, 8);
+RF24 radio (40, 53); // NRF24L01 used SPI pins + Pin 7 and 8 on the Mega
 const uint64_t pipe = 0xE6E6E6E6E6E6; // Needs to be the same for communicating between 2 NRF24L01
 int SentMessage[1] = {000}; // Used to store value before being sent through the NRF24L01
 
@@ -28,7 +30,7 @@ int SentMessage[1] = {000}; // Used to store value before being sent through the
 
 // RFID
 
-#include"rfid1.h"
+//#include"rfid1.h"
 RFID1 rfid; ////create a variable type of RFID
 uchar serNum[5]; // array to store your ID
 
@@ -48,7 +50,7 @@ uchar serNum[5]; // array to store your ID
 // RFID  
  
 Serial.begin(9600);
-rfid.begin(9, 5, 4, 3, 6, 10);//rfid.begin(IRQ_PIN,SCK_PIN,MOSI_PIN,MISO_PIN,NSS_PIN,RST_PIN)
+rfid.begin(33, 32, 31, 30, 28, 18); //rfid.begin(IRQ_PIN,SCK_PIN,MOSI_PIN,MISO_PIN,NSS_PIN,RST_PIN)
 delay(100); 
 rfid.init(); //initialize the RFID
 Serial.println(" RFID Ready ");
