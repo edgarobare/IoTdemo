@@ -1,4 +1,4 @@
-# README #
+# SMART OBJECTS #
 
 I worked on a project to create these smart objects that the company would use to demo IoT capabilities to clients.
 My role was the technical side to program Arduino boards and sensors to detect variable gestures and provide intuitive feedback.
@@ -30,5 +30,3 @@ Fig 2: Components layout
 All communication was done wirelessly between these two objects through custom chips nRF24L01. The power needs for this objects was achieved using power banks to make the project more portable and untethered. 
 
 ![alt text](img/slave.png) 
-Master Object	 
-Slave Object
